@@ -1,6 +1,7 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 
 class MyDocument extends Document {
+
     static async getInitialProps(ctx: DocumentContext) {
         const originalRenderPage = ctx.renderPage
 
