@@ -19,3 +19,4 @@ export const uiReducer = (state: UIState, action: UIActionType): UIState => {
         default:
             return state;
     }
+}
