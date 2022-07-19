@@ -1,5 +1,6 @@
 import { Box, Drawer, List, Typography } from "@mui/material"
 
+const MenuItems: string[] = ['Inbox', 'Starred', 'Send email', 'Drafts'];
 
 export const Sidebar = () => {
     return (
