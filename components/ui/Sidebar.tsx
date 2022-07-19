@@ -1,7 +1,7 @@
 import { InboxOutlined, MailOutlineOutlined } from "@mui/icons-material";
 import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
 
-const MenuItems: string[] = ['Inbox', 'Starred', 'Send email', 'Drafts'];
+const menuItems: string[] = ['Inbox', 'Starred', 'Send email', 'Drafts'];
 
 export const Sidebar = () => {
     return (
@@ -16,7 +16,7 @@ export const Sidebar = () => {
                 </Box>
                 <List>
                     {
-                        MenuItems.map((text, index) => (
+                        menuItems.map((text, index) => (
                             <ListItem key={index} button>
                                 <ListItemIcon>
                                     {index % 2 ? <InboxOutlined /> : <MailOutlineOutlined />}
