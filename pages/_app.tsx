@@ -5,9 +5,6 @@ import '../styles/globals.css'
 import { lightTheme, darkTheme } from '../theme';
 
 
-
-
-
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={darkTheme}>
