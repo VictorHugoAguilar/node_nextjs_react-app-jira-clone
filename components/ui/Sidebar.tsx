@@ -10,22 +10,23 @@ export const Sidebar = () => {
             open={true}
             onClose={() => { console.log('close') }}
         >
-            <Box sx={{ padding: '5px 10px' }}>
-                <Typography variant="h4">Menú</Typography>
+            <Box sx={{ width: 250 }}>
+                <Box sx={{ padding: '5px 10px' }}>
+                    <Typography variant="h4">Menú</Typography>
+                </Box>
+                <List>
+                    {
+                        MenuItems.map((text, index) => (
+                            <ListItem key={index} button>
+                                <ListItemIcon>
+                                    {index % 2 ? <InboxOutlined /> : <MailOutlineOutlined />}
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                        ))
+                    }
+                </List>
             </Box>
-            <List>
-                {
-                    MenuItems.map((text, index) => (
-                        <ListItem key={index} button>
-                            <ListItemIcon>
-                                {index % 2 ? <InboxOutlined /> : <MailOutlineOutlined />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))
-                }
-
-            </List>
         </Drawer>
     )
 }
