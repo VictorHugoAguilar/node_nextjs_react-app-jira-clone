@@ -17,7 +17,6 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
 
     const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.dataTransfer.setData('text', entry._id)
-
         console.log('drag start')
         // cambiar dependiendo si se hace drop and drag
         startDragging();
@@ -25,7 +24,6 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
 
     const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
         console.log('drag end')
-
         // cambiar dependiendo si se hace drop and drag
         endDragging();
     }
@@ -37,7 +35,7 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
         >
-            <CardHeader variant='h6' title={entry.title} />
+            <CardHeader title={entry.title} />
             <CardActionArea>
                 <CardContent>
                     <Typography
