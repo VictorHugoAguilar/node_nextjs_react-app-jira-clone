@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <EntriesProvider>
       <UIProvider>
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={lightTheme}>
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
