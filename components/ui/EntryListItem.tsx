@@ -5,6 +5,8 @@ import { Card, CardActionArea, CardContent, CardHeader, Typography } from '@mui/
 import { Entry } from '../../interfaces'
 import { UIContext } from '../../context/ui'
 
+import styles from './EntryList.module.css'
+import { red } from '@mui/material/colors'
 
 interface Props {
     entry: Entry
@@ -35,7 +37,14 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
         >
-            <CardHeader title={entry.title} />
+            <Typography
+                sx={{ fontSize: 14, marginLeft: 1, marginTop: 1 }}
+                color="text.secondary"
+                gutterBottom
+            >
+                {entry.title}
+            </Typography>
+
             <CardActionArea>
                 <CardContent>
                     <Typography
