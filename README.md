@@ -33,3 +33,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 # node_nextjs_react-app-jira-clone
+
+# Next.js OpenJira App
+Para levantar, se necesita la base de datos
+````
+docker-compose up -d
+````    
+
+* El -d, significa __detached__
+
+
