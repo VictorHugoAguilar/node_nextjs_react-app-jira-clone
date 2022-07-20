@@ -10,8 +10,23 @@ interface Props {
 }
 
 export const EntryListItem: FC<Props> = ({ entry }) => {
+
+    const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        e.dataTransfer.setData('text', entry._id)
+
+    }
+
+    const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+        console.log('drag end')
+
+    }
+
     return (
-        <Card sx={{ marginBottom: 1 }}>
+        <Card 
+        sx={{ marginBottom: 1 }}
+        draggable
+        onDragStart={onDragStart}
+        >
             <CardHeader variant='h6' title={entry.title} />
             <CardActionArea>
                 <CardContent>

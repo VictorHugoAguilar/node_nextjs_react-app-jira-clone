@@ -14,10 +14,22 @@ export const EntryList: FC<Props> = ({ status }) => {
 
     const { entries } = useContext(EntriesContext);
 
-    const entiesByStatus = useMemo(() => entries.filter(entry => entry.status === status), [entries])
+    const entiesByStatus = useMemo(() => entries.filter(entry => entry.status === status), [entries]);
+
+    const onDropEntry = (e: React.DragEvent<HTMLDivElement>) => {
+        const id = e.dataTransfer.getData('text')
+        console.log(id)
+    }
+
+    const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+    }
 
     return (
-        <div>
+        <div
+            onDrop={onDropEntry}
+            onDragOver={allowDrop}
+        >
             <Paper sx={{
                 height: 'calc(100vh - 180px',
                 overflow: 'scroll',
