@@ -1,11 +1,16 @@
-import { Box, Button, TextField } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react';
+
+import { EntriesContext } from '../../context/entries';
+
+import { Box, Button, TextField } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 
 export const NewEntry = () => {
+
+    const { addNewEntry } = useContext(EntriesContext);
 
     const [isAdding, setIsAdding] = React.useState(false);
 
@@ -26,7 +31,16 @@ export const NewEntry = () => {
 
         console.log(`Saving new entry: ${inputTitle}`);
         console.log(`Saving new entry: ${inputDescription}`);
-    }
+
+        // Saved in context
+        addNewEntry(inputTitle, inputDescription);
+
+        // Reset form
+        setInputTitle('');
+        setInputDescription('');
+        setTouched(false);
+        setIsAdding(false);
+     }
 
     return (
         <Box sx={{
@@ -43,7 +57,6 @@ export const NewEntry = () => {
                         }}
                         placeholder="Title"
                         autoFocus
-                        multiline
                         label='Título Nueva entrada'
                         variant="outlined"
                         helperText={inputTitle.length <= 0 && touched && "Escribe el título de la entrada"}
