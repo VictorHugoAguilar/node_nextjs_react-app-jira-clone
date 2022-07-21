@@ -42,4 +42,7 @@ docker-compose up -d
 
 * El -d, significa __detached__
 
+## Configurar las variables de entorno
+Renombrar el archivo __.env.template a __.env__
+
 
