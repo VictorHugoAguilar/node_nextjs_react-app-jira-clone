@@ -5,7 +5,7 @@ import { Card, CardActionArea, CardContent, Typography } from '@mui/material'
 import { Entry } from '../../interfaces'
 import { UIContext } from '../../context/ui'
 import { useRouter } from 'next/router'
-import { calculateElapsedTime } from '../../utils'
+import { calculateElapsedTime, showLogs } from '../../utils'
 
 interface Props {
     entry: Entry
@@ -18,22 +18,22 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
 
 
     const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        showLogs('info', 'in onDragStart');
         e.dataTransfer.setData('text', entry._id)
-        console.log('drag start')
+
         // cambiar dependiendo si se hace drop and drag
         startDragging();
     }
 
     const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log('drag end')
+        showLogs('info', 'in onDragEnd');
         // cambiar dependiendo si se hace drop and drag
         endDragging();
     }
 
     const onClick = () => {
-        console.log('click');
+        showLogs('info', 'in onClick for entry:', entry._id);
         router.push(`/entries/${entry._id}`);
-
     }
 
     return (
