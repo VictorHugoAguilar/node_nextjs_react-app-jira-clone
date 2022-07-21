@@ -1,7 +1,9 @@
 import { NextPage } from 'next';
 
-import { Button, capitalize, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
+import { Button, capitalize, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, TextField } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+
 import { Layout } from '../../components/layouts';
 import { EntryStatus } from '../../interfaces';
 
@@ -62,6 +64,18 @@ const EntryPage: NextPage = () => {
                     </Card>
                 </Grid>
             </Grid>
+
+            <IconButton
+                sx={{
+                    size: 'large',
+                    position: "fixed",
+                    bottom: 50,
+                    right: 50,
+                    backgroundColor: 'error.dark',
+                }}
+            >
+                <DeleteOutlineIcon />
+            </IconButton>
         </Layout>
     )
 }
