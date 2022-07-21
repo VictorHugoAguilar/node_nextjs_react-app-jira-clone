@@ -48,8 +48,8 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const onSaved = () => {
         if (inputTitle.length === 0 || inputDescription.length === 0) return;
 
-        console.log(`updateEntry entry: ${inputTitle}`);
-        console.log(`updateEntry entry: ${inputDescription}`);
+        console.log(`updateEntry entry inputTitle: ${inputTitle}`);
+        console.log(`updateEntry entry inputDescription: ${inputDescription}`);
 
         const updatedEntry: Entry = {
             ...entry,

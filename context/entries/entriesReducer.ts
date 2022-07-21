@@ -7,7 +7,6 @@ type entriesActionType =
     | { type: '[Entry] - Delete-Entry', payload: Entry }
     | { type: '[Entry] - Refresh-Entry', payload: Entry[] }
 
-
 export const entriesReducer = (state: EntriesState, action: entriesActionType): EntriesState => {
 
     switch (action.type) {
@@ -16,7 +15,6 @@ export const entriesReducer = (state: EntriesState, action: entriesActionType): 
                 ...state,
                 entries: [...state.entries, action.payload]
             }
-
         case '[Entry] - Update-Entry':
             return {
                 ...state,
@@ -29,7 +27,6 @@ export const entriesReducer = (state: EntriesState, action: entriesActionType): 
                     return entry;
                 })
             }
-
         case '[Entry] - Refresh-Entry':
             return {
                 ...state,
