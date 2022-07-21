@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 
 import { Button, capitalize, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, TextField } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
@@ -7,8 +7,13 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { Layout } from '../../components/layouts';
 import { EntryStatus } from '../../interfaces';
+import { isValidObjectId } from 'mongoose';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
+
+interface Props {
+
+}
 
 const EntryPage: NextPage = () => {
 
@@ -132,6 +137,25 @@ const EntryPage: NextPage = () => {
             </IconButton>
         </Layout>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    const { id } = params as { id: string };
+
+    if (!isValidObjectId(id)) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            }
+        }
+    }
+
+    return {
+        props: {
+            id,
+        }
+    }
 }
 
 export default EntryPage;
