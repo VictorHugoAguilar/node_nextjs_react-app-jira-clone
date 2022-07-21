@@ -29,9 +29,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
             status: 'pending',
             createdAt: Date.now(),
         }
-
         dispatch({ type: '[Entry] - Add-Entry', payload: newEntry })
-
     }
 
     const updateEntry = (entry: Entry) => {
@@ -39,8 +37,8 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     }
 
     const refreshEntries = async () => {
-        const { data } = await entriesApi.get<Entry>('/entries');
-
+        const { data } = await entriesApi.get<Entry[]>('/entries');
+        dispatch({ type: '[Entry] - Refresh-Entry', payload: data })
     }
 
     useEffect(() => {
