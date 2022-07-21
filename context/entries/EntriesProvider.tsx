@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack'
 import { entriesReducer, EntriesContext } from './';
 import { Entry } from '../../interfaces';
 import { entriesApi } from '../../api';
+import { showLogs } from '../../utils';
 
 export interface EntriesState {
     entries: Entry[];
@@ -22,24 +23,32 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const addNewEntry = async (title: string, description: string, showSnackbar = false) => {
-        const { data } = await entriesApi.post<Entry>('/entries', {
-            title,
-            description
-        });
-        dispatch({ type: '[Entry] - Add-Entry', payload: data });
+        showLogs('debug', 'in addNewEntry with data:', { title, description });
 
-        // mostrar snackbar com mensagem de sucesso
-        enqueueSnackbar('Entry added successfully', {
-            variant: 'success',
-            autoHideDuration: 3000,
-            anchorOrigin: {
-                vertical: 'top',
-                horizontal: 'right',
-            },
-        });
+        try {
+            const { data } = await entriesApi.post<Entry>('/entries', {
+                title,
+                description
+            });
+            dispatch({ type: '[Entry] - Add-Entry', payload: data });
+
+            // mostrar snackbar com mensagem de sucesso
+            enqueueSnackbar('Entry added successfully', {
+                variant: 'success',
+                autoHideDuration: 3000,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right',
+                },
+            });
+        } catch (error) {
+            showLogs('error', 'error adding entry', error);
+        }
     }
 
     const updateEntry = async ({ _id, title, description, status }: Entry, showSnackbar = false) => {
+        showLogs('debug', 'in updateEntry with entry:', { _id, title, description, status });
+
         try {
             const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
                 title: title,
@@ -58,11 +67,13 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
                 },
             });
         } catch (error) {
-            console.log({ error });
+            showLogs('error', 'error updating entry', error);
         }
     }
 
     const deleteEntry = async ({ _id }: Entry, showSnackbar = false) => {
+        showLogs('debug', 'in deleteEntry with id:', _id);
+
         try {
             const { data } = await entriesApi.delete<Entry>(`/entries/${_id}`);
             dispatch({ type: '[Entry] - Delete-Entry', payload: data });
@@ -77,13 +88,19 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
                 },
             });
         } catch (error) {
-            console.log({ error });
+            showLogs('error', 'error deleting entry', error);
         }
     }
 
     const refreshEntries = async () => {
-        const { data } = await entriesApi.get<Entry[]>('/entries');
-        dispatch({ type: '[Entry] - Refresh-Entry', payload: data })
+        showLogs('debug', 'in refreshEntries');
+
+        try {
+            const { data } = await entriesApi.get<Entry[]>('/entries');
+            dispatch({ type: '[Entry] - Refresh-Entry', payload: data })
+        } catch (error) {
+            showLogs('error', 'error refreshEntries entry', error);
+        }
     }
 
     useEffect(() => {
