@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { Button, capitalize, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, TextField } from '@mui/material';
@@ -15,13 +15,12 @@ interface Props {
     entry: Entry;
 }
 
-const EntryPage: NextPage = (props) => {
+const EntryPage: FC<Props> = ({ entry }) => {
+    console.log('entry page', { entry });
 
-    console.log('entry page', { props });
-
-    const [inputTitle, setInputTitle] = useState('');
-    const [inputDescription, setInputDescription] = useState('');
-    const [inputStatus, setInputStatus] = useState<EntryStatus>('pending');
+    const [inputTitle, setInputTitle] = useState(entry.title);
+    const [inputDescription, setInputDescription] = useState(entry.description);
+    const [inputStatus, setInputStatus] = useState<EntryStatus>(entry.status);
     const [touched, setTouched] = useState(false);
 
     const onTextFieldTitleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
