@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useContext, useMemo, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { Button, capitalize, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, TextField } from '@mui/material';
@@ -9,6 +9,7 @@ import { Layout } from '../../components/layouts';
 import { Entry, EntryStatus } from '../../interfaces';
 import { dbEntry } from '../../database';
 import { calculateElapsedTime } from '../../utils';
+import { EntriesContext } from '../../context/entries';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -23,6 +24,8 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const [inputDescription, setInputDescription] = useState(entry.description);
     const [inputStatus, setInputStatus] = useState<EntryStatus>(entry.status);
     const [touched, setTouched] = useState(false);
+
+    const { updateEntry } = useContext(EntriesContext);
 
     const onTextFieldTitleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputTitle(event.target.value);
@@ -41,19 +44,19 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const isNotValidDescription = useMemo(() => inputDescription.length <= 0 && touched, [inputDescription, touched]);
 
     const onSaved = () => {
-        // if (inputTitle.length === 0 || inputDescription.length === 0) return;
+        if (inputTitle.length === 0 || inputDescription.length === 0) return;
 
-        // console.log(`Saving new entry: ${inputTitle}`);
-        // console.log(`Saving new entry: ${inputDescription}`);
+        console.log(`updateEntry entry: ${inputTitle}`);
+        console.log(`updateEntry entry: ${inputDescription}`);
 
-        // // Saved in context
-        // addNewEntry(inputTitle, inputDescription);
+        const updatedEntry: Entry = {
+            ...entry,
+            status: inputStatus,
+            title: inputTitle,
+            description: inputDescription,
+        }
 
-        // // Reset form
-        // setInputTitle('');
-        // setInputDescription('');
-        // setTouched(false);
-        // setIsAddingEntry(false);
+        updateEntry(updatedEntry);
     }
 
 
