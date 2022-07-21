@@ -56,7 +56,7 @@ const EntryPage: FC<Props> = ({ entry }) => {
             description: inputDescription,
         }
 
-        updateEntry(updatedEntry);
+        updateEntry(updatedEntry, true);
     }
 
 

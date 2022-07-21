@@ -1,8 +1,7 @@
 import { FC, useEffect, useReducer } from 'react';
-import { entriesReducer, EntriesContext } from '.';
+import { useSnackbar } from 'notistack'
+import { entriesReducer, EntriesContext } from './';
 import { Entry } from '../../interfaces';
-
-import { v4 as uuid } from 'uuid';
 import { entriesApi } from '../../api';
 
 export interface EntriesState {
@@ -20,6 +19,7 @@ interface Props {
 export const EntriesProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const addNewEntry = async (title: string, description: string) => {
         const { data } = await entriesApi.post<Entry>('/entries', {
@@ -29,7 +29,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         dispatch({ type: '[Entry] - Add-Entry', payload: data })
     }
 
-    const updateEntry = async ({ _id, title, description, status }: Entry) => {
+    const updateEntry = async ({ _id, title, description, status }: Entry, showSnackbar = false) => {
         try {
             const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
                 title: title,
@@ -38,7 +38,15 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
             });
             dispatch({ type: '[Entry] - Update-Entry', payload: data });
 
-            // TODO: mostrar snackbar com mensagem de sucesso
+            // mostrar snackbar com mensagem de sucesso
+            enqueueSnackbar('Entry updated successfully', {
+                variant: 'success',
+                autoHideDuration: 3000,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right',
+                },
+            });
         } catch (error) {
             console.log({ error });
         }
