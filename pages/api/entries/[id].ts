@@ -52,11 +52,13 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             status
         }, { runValidators: true, new: true });
 
+        await db.disconnect();
+
         return res.status(200).json(updateEntry!);
     } catch (error) {
         await db.disconnect();
         console.log(error);
-        return res.status(500).json({ message: 'Error updating entry' });
+        return res.status(500).json({ message: JSON.stringify(error) });
     }
 }
 
