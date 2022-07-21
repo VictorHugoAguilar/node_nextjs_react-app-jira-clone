@@ -4,6 +4,7 @@ import { Card, CardActionArea, CardContent, CardHeader, Typography } from '@mui/
 
 import { Entry } from '../../interfaces'
 import { UIContext } from '../../context/ui'
+import { useRouter } from 'next/router'
 
 interface Props {
     entry: Entry
@@ -12,6 +13,7 @@ interface Props {
 export const EntryListItem: FC<Props> = ({ entry }) => {
 
     const { startDragging, endDragging } = useContext(UIContext);
+    const router = useRouter();
 
 
     const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
@@ -27,12 +29,19 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
         endDragging();
     }
 
+    const onClick = () => {
+        console.log('click');
+        router.push(`/entries/${entry._id}`);
+
+    }
+
     return (
         <Card
             sx={{ marginBottom: 1 }}
             draggable
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
+            onClick={onClick}
         >
             <Typography
                 sx={{ fontSize: 14, marginLeft: 1, marginTop: 1 }}
