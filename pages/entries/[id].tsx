@@ -57,11 +57,14 @@ const EntryPage: FC<Props> = ({ entry }) => {
 
 
     return (
-        <Layout title="Entry Page">
+        <Layout title={`${inputTitle.substring(0, 20)} ...`}>
             <Grid container justifyContent={'center'} sx={{ marginTop: '1rem' }}     >
                 <Grid item xs={12} sm={8} md={6} >
                     <Card>
-                        <CardHeader title={`Entrada: ${inputTitle}`} subheader={'creada hace ...'} />
+                        <CardHeader
+                            title={`Entrada: ${inputTitle}`}
+                            subheader={`Tarea creada hace ${calcularTiempoPasado(entry.createdAt)}`}
+                        />
 
                         <CardContent>
                             <TextField
@@ -159,6 +162,34 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             entry
         }
     }
+}
+
+const calcularTiempoPasado = (createdAt: number) => {
+    const now = new Date().getTime();
+    const diff = now - createdAt;
+
+    const seconds = Math.floor(diff / (1000));
+    const minutes = Math.floor(diff / (1000 * 60));
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return `${days} días`;
+    }
+
+    if (hours > 0) {
+        return `${hours} horas`;
+    }
+
+    if (minutes > 0) {
+        return `${minutes} minutos`;
+    }
+
+    if (seconds > 0) {
+        return `${seconds} segundos`;
+    }
+
+    return `${diff} milisegundos`;
 }
 
 export default EntryPage;
