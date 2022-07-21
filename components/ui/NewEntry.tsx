@@ -29,8 +29,10 @@ export const NewEntry = () => {
     const onSaved = () => {
         if (inputTitle.length === 0 || inputDescription.length === 0) return;
 
-        console.log(`Saving new entry: ${inputTitle}`);
-        console.log(`Saving new entry: ${inputDescription}`);
+        if (process.env.SHOW_LOG_DEV) {
+            console.log(`Saving new entry: ${inputTitle}`);
+            console.log(`Saving new entry: ${inputDescription}`);
+        }
 
         // Saved in context
         addNewEntry(inputTitle, inputDescription, true);
