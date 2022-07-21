@@ -45,4 +45,9 @@ docker-compose up -d
 ## Configurar las variables de entorno
 Renombrar el archivo __.env.template a __.env__
 
+## Cargar datos en BD de prueba
+LLamar
+`````
+http://localhost:3000/api/seed
+``````
 
