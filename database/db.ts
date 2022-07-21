@@ -41,8 +41,8 @@ export const disconnect = async () => {
         return;
     }
 
+    await mongoose.disconnect();
     mongoConnection.isConnected = 0;
 
-    await mongoose.disconnect();
     console.log('MongoDB is disconnected');
 }

@@ -8,7 +8,6 @@ type Data = { message: string; }
     | IEntry;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-
     const { id } = req.query;
 
     if (!mongoose.isValidObjectId(id)) {
@@ -24,7 +23,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
         case 'DELETE':
             return deleteEntry(req, res);
-
 
         default:
             return res.status(200).json({ message: 'Not valid method' });
@@ -66,7 +64,26 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 }
 
 const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-    throw new Error('Function not implemented.');
+    const { id } = req.query;
+
+    try {
+        await db.connect();
+        const entryToDelete = await Entry.findById(id);
+
+        if (!entryToDelete) {
+            await db.disconnect();
+            return res.status(404).json({ message: 'Entry not found' });
+        }
+
+        const deleted = await Entry.findByIdAndDelete(id);
+        await db.disconnect();
+
+        return res.status(200).json(deleted!);
+    } catch (error) {
+        await db.disconnect();
+        console.log(error);
+        return res.status(500).json({ message: JSON.stringify(error) });
+    }
 }
 
 const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
