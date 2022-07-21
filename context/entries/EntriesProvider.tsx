@@ -37,6 +37,8 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
                 status: status
             });
             dispatch({ type: '[Entry] - Update-Entry', payload: data });
+
+            // TODO: mostrar snackbar com mensagem de sucesso
         } catch (error) {
             console.log({ error });
         }
