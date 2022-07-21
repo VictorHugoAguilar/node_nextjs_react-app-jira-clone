@@ -8,8 +8,17 @@ import { Box, Button, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddIcon from '@mui/icons-material/AddCircleOutline';
+import { showLogs } from '../../utils';
 
 export const NewEntry = () => {
+
+    console.log('NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
+    showLogs('info', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
+    showLogs('warn', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
+    showLogs('error', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
+    showLogs('log', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
+
+
 
     const { addNewEntry } = useContext(EntriesContext);
     const { isAddingEntry, setIsAddingEntry } = useContext(UIContext);
