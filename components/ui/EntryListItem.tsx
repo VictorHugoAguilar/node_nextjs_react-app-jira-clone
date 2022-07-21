@@ -5,9 +5,6 @@ import { Card, CardActionArea, CardContent, CardHeader, Typography } from '@mui/
 import { Entry } from '../../interfaces'
 import { UIContext } from '../../context/ui'
 
-import styles from './EntryList.module.css'
-import { red } from '@mui/material/colors'
-
 interface Props {
     entry: Entry
 }
