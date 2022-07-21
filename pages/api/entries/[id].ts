@@ -19,6 +19,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         case 'PUT':
             return updateEntry(req, res);
 
+        case 'GET':
+            return getEntry(req, res);
+
         case 'DELETE':
             return deleteEntry(req, res);
 
@@ -64,5 +67,26 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     throw new Error('Function not implemented.');
+}
+
+const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+    const { id } = req.query;
+
+    try {
+        await db.connect();
+        const entrySearched = await Entry.findById(id);
+
+        if (!entrySearched) {
+            return res.status(400).json({ message: `Not found data by id ${id}` }!);
+        }
+
+        await db.disconnect();
+        return res.status(200).json(entrySearched!);
+    } catch (error) {
+        await db.disconnect();
+        console.log(error);
+        return res.status(500).json({ message: JSON.stringify(error) });
+    }
+
 }
 
