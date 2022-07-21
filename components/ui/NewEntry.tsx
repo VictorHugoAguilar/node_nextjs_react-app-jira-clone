@@ -11,14 +11,7 @@ import AddIcon from '@mui/icons-material/AddCircleOutline';
 import { showLogs } from '../../utils';
 
 export const NewEntry = () => {
-
-    console.log('NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
-    showLogs('info', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
-    showLogs('warn', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
-    showLogs('error', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
-    showLogs('log', 'NEXT_PUBLIC_SHOW_LOGS', process.env.NEXT_PUBLIC_SHOW_LOGS);
-
-
+    showLogs('info', 'entry in NewEntry');
 
     const { addNewEntry } = useContext(EntriesContext);
     const { isAddingEntry, setIsAddingEntry } = useContext(UIContext);
@@ -36,12 +29,12 @@ export const NewEntry = () => {
     }
 
     const onSaved = () => {
+        showLogs('info', 'entry onSaved');
+
         if (inputTitle.length === 0 || inputDescription.length === 0) return;
 
-        if (process.env.SHOW_LOG_DEV) {
-            console.log(`Saving new entry: ${inputTitle}`);
-            console.log(`Saving new entry: ${inputDescription}`);
-        }
+        showLogs('debug', `Saving new entry inputTitle: ${inputTitle}`);
+        showLogs('debug', `Saving new entry inputDescription: ${inputDescription}`);
 
         // Saved in context
         addNewEntry(inputTitle, inputDescription, true);
