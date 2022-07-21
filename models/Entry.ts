@@ -8,7 +8,6 @@ interface IEntry {
     desciption: string;
     createdAt: number;
     status: EntryStatus
-
 }
 
 const entrySchema = new Schema({
