@@ -1,8 +1,7 @@
 export type logType = 'info' | 'warn' | 'error' | 'debug' | 'log';
 
 export const showLogs = (type: logType = 'info', msg: string, obj?: any) => {
-    if (process.env.NEXT_PUBLIC_SHOW_LOGS) {
-
+    if (process.env.NEXT_PUBLIC_SHOW_LOGS === 'TRUE') {
         const message = `[${new Date().toISOString()}] [${type.toUpperCase()}] ${msg} ${obj ? JSON.stringify(obj) : ''}`;
 
         switch (type) {
