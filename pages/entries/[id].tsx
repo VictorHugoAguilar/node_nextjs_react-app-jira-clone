@@ -10,6 +10,7 @@ import { Entry, EntryStatus } from '../../interfaces';
 import { dbEntry } from '../../database';
 import { calculateElapsedTime } from '../../utils';
 import { EntriesContext } from '../../context/entries';
+import { useRouter } from 'next/router';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -25,7 +26,8 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const [inputStatus, setInputStatus] = useState<EntryStatus>(entry.status);
     const [touched, setTouched] = useState(false);
 
-    const { updateEntry } = useContext(EntriesContext);
+    const { updateEntry, deleteEntry } = useContext(EntriesContext);
+    const router = useRouter();
 
     const onTextFieldTitleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputTitle(event.target.value);
@@ -58,6 +60,14 @@ const EntryPage: FC<Props> = ({ entry }) => {
 
         updateEntry(updatedEntry, true);
     }
+
+    const onDeleted = () => {
+        console.log('deleteEntry entry: ', entry);
+        deleteEntry(entry, true);
+
+        router.push('/');
+    }
+
 
 
     return (
@@ -140,6 +150,7 @@ const EntryPage: FC<Props> = ({ entry }) => {
                     right: 50,
                     backgroundColor: 'error.dark',
                 }}
+                onClick={onDeleted}
             >
                 <DeleteOutlineIcon />
             </IconButton>
