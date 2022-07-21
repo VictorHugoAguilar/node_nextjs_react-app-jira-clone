@@ -33,7 +33,7 @@ export const NewEntry = () => {
         console.log(`Saving new entry: ${inputDescription}`);
 
         // Saved in context
-        addNewEntry(inputTitle, inputDescription);
+        addNewEntry(inputTitle, inputDescription, true);
 
         // Reset form
         setInputTitle('');

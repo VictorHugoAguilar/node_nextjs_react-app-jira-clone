@@ -21,12 +21,22 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const addNewEntry = async (title: string, description: string) => {
+    const addNewEntry = async (title: string, description: string, showSnackbar = false) => {
         const { data } = await entriesApi.post<Entry>('/entries', {
             title,
             description
         });
-        dispatch({ type: '[Entry] - Add-Entry', payload: data })
+        dispatch({ type: '[Entry] - Add-Entry', payload: data });
+
+        // mostrar snackbar com mensagem de sucesso
+        enqueueSnackbar('Entry added successfully', {
+            variant: 'success',
+            autoHideDuration: 3000,
+            anchorOrigin: {
+                vertical: 'top',
+                horizontal: 'right',
+            },
+        });
     }
 
     const updateEntry = async ({ _id, title, description, status }: Entry, showSnackbar = false) => {
