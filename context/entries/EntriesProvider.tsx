@@ -21,15 +21,12 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
 
-    const addNewEntry = (title: string, description: string) => {
-        const newEntry: Entry = {
-            _id: uuid(),
+    const addNewEntry = async (title: string, description: string) => {
+        const { data } = await entriesApi.post<Entry>('/entries', {
             title,
-            description,
-            status: 'pending',
-            createdAt: Date.now(),
-        }
-        dispatch({ type: '[Entry] - Add-Entry', payload: newEntry })
+            description
+        });
+        dispatch({ type: '[Entry] - Add-Entry', payload: data })
     }
 
     const updateEntry = (entry: Entry) => {
