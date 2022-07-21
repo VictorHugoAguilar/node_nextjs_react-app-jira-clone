@@ -15,21 +15,21 @@ const Entries_INITIAL_STATE: EntriesState = {
             title: 'React',
             description: 'A JavaScript library for building user interfaces.',
             status: 'pending',
-            createAt: Date.now(),
+            createdAt: Date.now(),
         },
         {
             _id: uuid(),
             title: 'React',
             description: 'A JavaScript library for building user interfaces.',
             status: 'in-progress',
-            createAt: Date.now() - 100000,
+            createdAt: Date.now() - 100000,
         },
         {
             _id: uuid(),
             title: 'React',
             description: 'A JavaScript library for building user interfaces.',
             status: 'finished',
-            createAt: Date.now() - 1000000,
+            createdAt: Date.now() - 1000000,
         },
     ]
 }
@@ -48,7 +48,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
             title,
             description,
             status: 'pending',
-            createAt: Date.now(),
+            createdAt: Date.now(),
         }
 
         dispatch({ type: '[Entry] - Add-Entry', payload: newEntry })
