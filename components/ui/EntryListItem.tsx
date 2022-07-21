@@ -5,6 +5,7 @@ import { Card, CardActionArea, CardContent, CardHeader, Typography } from '@mui/
 import { Entry } from '../../interfaces'
 import { UIContext } from '../../context/ui'
 import { useRouter } from 'next/router'
+import { calculateElapsedTime } from '../../utils'
 
 interface Props {
     entry: Entry
@@ -68,7 +69,11 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
             }}>
                 <Typography
                     variant='body2'
-                >hace 30min</Typography>
+                >
+                    {
+                        `creada hace ${calculateElapsedTime(entry.createdAt)}`
+                    }
+                </Typography>
             </CardActionArea>
         </Card>
     )
