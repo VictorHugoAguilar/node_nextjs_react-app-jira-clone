@@ -1,14 +1,7 @@
 import mongoose, { Model, Schema } from "mongoose";
-import { EntryStatus } from "../interfaces";
+import { Entry } from "../interfaces";
 
-
-interface IEntry {
-    _id: string;
-    title: string;
-    desciption: string;
-    createdAt: number;
-    status: EntryStatus
-}
+export interface IEntry extends Entry { }
 
 const entrySchema = new Schema({
     title: {
