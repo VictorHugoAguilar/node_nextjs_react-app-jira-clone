@@ -8,7 +8,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Layout } from '../../components/layouts';
 import { Entry, EntryStatus } from '../../interfaces';
 import { dbEntry } from '../../database';
-import { calculateElapsedTime } from '../../utils';
+import { calculateElapsedTime, showLogs } from '../../utils';
 import { EntriesContext } from '../../context/entries';
 import { useRouter } from 'next/router';
 
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const EntryPage: FC<Props> = ({ entry }) => {
-    console.log('entry page', { entry });
+    showLogs('info', 'in EntryPage with entry:', entry);
 
     const [inputTitle, setInputTitle] = useState(entry.title);
     const [inputDescription, setInputDescription] = useState(entry.description);
@@ -30,15 +30,17 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const router = useRouter();
 
     const onTextFieldTitleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        showLogs('info', 'in onTextFieldTitleChanged with event:', event.target.value);
         setInputTitle(event.target.value);
     }
 
     const onTextFieldDescriptionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        showLogs('info', 'in onTextFieldDescriptionChanged with event:', event.target.value);
         setInputDescription(event.target.value);
     }
 
     const onStatusChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(`Status changed to: ${event.target.value}`);
+        showLogs('info', 'in onStatusChanged with event:', event.target.value);
         setInputStatus(event.target.value as EntryStatus);
     }
 
@@ -46,10 +48,11 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const isNotValidDescription = useMemo(() => inputDescription.length <= 0 && touched, [inputDescription, touched]);
 
     const onSaved = () => {
+        showLogs('info', 'in onSaved with entry:', entry);
+
         if (inputTitle.length === 0 || inputDescription.length === 0) return;
 
-        console.log(`updateEntry entry inputTitle: ${inputTitle}`);
-        console.log(`updateEntry entry inputDescription: ${inputDescription}`);
+        showLogs('info', 'in onSaved with entry:', entry);
 
         const updatedEntry: Entry = {
             ...entry,
@@ -62,9 +65,8 @@ const EntryPage: FC<Props> = ({ entry }) => {
     }
 
     const onDeleted = () => {
-        console.log('deleteEntry entry: ', entry);
+        showLogs('info', 'in onDeleted with entry:', entry);
         deleteEntry(entry, true);
-
         router.push('/');
     }
 
