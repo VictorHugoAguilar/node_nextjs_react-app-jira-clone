@@ -1,16 +1,16 @@
 
 import mongoose from 'mongoose';
+import { showLogs } from '../utils';
 
 const mongoConnection = {
     isConnected: 0
 }
 
 export const connect = async () => {
-
-    console.log('Connecting to MongoDB...');
+    showLogs('info', '[db.ts] in connect');
 
     if (mongoConnection.isConnected) {
-        console.log('MongoDB is already connected');
+        showLogs('warn', 'MongoDB is already connected');
         return;
     }
 
@@ -18,7 +18,7 @@ export const connect = async () => {
         mongoConnection.isConnected = mongoose.connections[0].readyState;
 
         if (mongoConnection.isConnected === 1) {
-            console.log('MongoDB is already connected, last connection is used');
+            showLogs('warn', 'MongoDB is already connected, last connection is used');
             return;
         }
 
@@ -28,10 +28,12 @@ export const connect = async () => {
     await mongoose.connect(process.env.MONGO_URI || '');
 
     mongoConnection.isConnected = 1;
-    console.log('MongoDB is connected');
+    showLogs('warn', 'MongoDB is connected');
 }
 
 export const disconnect = async () => {
+    showLogs('info', '[db.ts] in disconnect');
+
 
     if (process.env.NODE_ENV !== 'development') {
         return;
@@ -44,5 +46,5 @@ export const disconnect = async () => {
     await mongoose.disconnect();
     mongoConnection.isConnected = 0;
 
-    console.log('MongoDB is disconnected');
+    showLogs('warn', 'MongoDB is disconnected');
 }

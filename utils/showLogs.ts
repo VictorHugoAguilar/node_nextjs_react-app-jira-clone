@@ -1,16 +1,15 @@
 export type logType = 'info' | 'warn' | 'error';
 
-export const showLogs = (type: logType = 'info', msg: string, obj?: any) => {
+export const showLogs = (type: logType = 'warn', msg: string, obj?: any) => {
     const message = `[${new Date().toISOString()}] [${type.toUpperCase()}] ${msg} ${obj ? JSON.stringify(obj) : ''}`;
 
     switch (type) {
         case 'info':
-            if (process.env.NEXT_PUBLIC_SHOW_LOGS === 'TRUE')
-                console.log(`%c${message}`, 'color: #F6E40E; font-weight: bold;');
+            if (process.env.NEXT_PUBLIC_SHOW_LOGS === 'INFO')
+                console.log(`%c${message}`, 'color: #1CF60E;');
             break;
         case 'warn':
-            if (process.env.NEXT_PUBLIC_SHOW_LOGS === 'TRUE')
-                console.log(`%c${message}`, 'color: #FFF033; font-weight: bold;');
+            console.log(`%c${message}`, 'color: #FFF033; ');
             break;
         case 'error':
             console.log(`%c${message}`, 'color: #F60E0E; font-weight: bold;');
