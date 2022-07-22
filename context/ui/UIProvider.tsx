@@ -5,12 +5,14 @@ export interface UIState {
     sideMenuOpen: boolean;
     isAddingEntry: boolean;
     isDragging: boolean;
+    darkMode: boolean;
 }
 
 const UI_INITIAL_STATE: UIState = {
     sideMenuOpen: false,
     isAddingEntry: false,
-    isDragging: false
+    isDragging: false,
+    darkMode: false
 }
 
 interface Props {
@@ -41,6 +43,10 @@ export const UIProvider: FC<Props> = ({ children }) => {
         dispatch({ type: 'UI - End Dragging' });
     }
 
+    const changeDarkMode = () => {
+        dispatch({ type: 'UI - Change Theme' });
+    }
+
     return (
         <UIContext.Provider value={{
             ...state,
@@ -52,6 +58,8 @@ export const UIProvider: FC<Props> = ({ children }) => {
             setIsAddingEntry,
             startDragging,
             endDragging,
+
+            changeDarkMode,
         }}>
             {children}
         </UIContext.Provider>
