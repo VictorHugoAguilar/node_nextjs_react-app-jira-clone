@@ -4,6 +4,7 @@ interface ContextProps {
     sideMenuOpen: boolean;
     isAddingEntry: boolean;
     isDragging: boolean;
+    darkMode: boolean;
 
     // Actions
     openSideMenu: () => void;
@@ -13,6 +14,8 @@ interface ContextProps {
     
     startDragging: () => void;
     endDragging: () => void;
+
+    changeDarkMode: () => void;
 }
 
 export const UIContext = createContext({} as ContextProps);
