@@ -11,7 +11,7 @@ import AddIcon from '@mui/icons-material/AddCircleOutline';
 import { showLogs } from '../../utils';
 
 export const NewEntry = () => {
-    showLogs('info', 'entry in NewEntry');
+    // showLogs('info', 'entry in NewEntry');
 
     const { addNewEntry } = useContext(EntriesContext);
     const { isAddingEntry, setIsAddingEntry } = useContext(UIContext);

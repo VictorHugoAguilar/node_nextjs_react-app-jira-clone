@@ -5,33 +5,51 @@ import { AppBar, Grid, IconButton, Link, Toolbar, Typography } from "@mui/materi
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import { UIContext } from "../../context/ui";
 import { showLogs } from "../../utils";
 import Cookies from 'js-cookie';
+import Router from "next/router";
 
 export const Navbar = () => {
     const { openSideMenu } = useContext(UIContext);
 
-    const [currentTheme, setCurrentTheme] = useState(Cookies.get('theme') || 'lightMode');
+    const [currentTheme, setCurrentTheme] = useState(Cookies.get('darkMode'));
     // const { setThemeMode } = useContext(UIContext);
 
     const handleChangeTheme = () => {
-        if (currentTheme === 'darkMode') {
-            setCurrentTheme('lightMode');
-        } else {
-            setCurrentTheme('darkMode');
-        }
-        // setThemeMode(currentTheme);
-        showLogs('info', 'Changing to theme:', currentTheme);
+        showLogs('info', 'Changing theme to', currentTheme);
 
-        // localStorage.setItem('theme', currentTheme);
-        Cookies.set('theme', currentTheme);
+        Cookies.set('darkMode', Cookies.get('darkMode') === 'true' ? 'false' : 'true');
+        localStorage.setItem('darkMode', localStorage.getItem('darkMode') === 'true' ? 'false' : 'true');
+        setCurrentTheme(currentTheme === 'true' ? 'false' : 'true');
+        showLogs('info', '[handleChangeTheme] Changing to theme to darkMode:', currentTheme);
+
+        // if (currentTheme) {
+        // } if (currentTheme == 'darkMode') {
+        //     Cookies.set('theme', 'darkMode');
+        //     localStorage.setItem('theme', 'darkMode');
+        //     setCurrentTheme('darkMode');
+        //     showLogs('info', '[handleChangeTheme] Changing to theme:', 'darkMode');
+        // }
+        // setThemeMode(currentTheme);
+        // Router.reload();
+
     }
 
-    // useEffect(() => {
-    //     showLogs('info', 'Theme is:', localStorage.getItem('theme'));
-    // }, []);
+    useEffect(() => {
+        showLogs('info', '[useEffect] Theme is:', localStorage.getItem('darkMode'));
+    }, [currentTheme]);
+
+    const getMode = () => {
+        showLogs('info', '[getMode] Theme is:', currentTheme);
+
+        const darkTheme = Cookies.get('darkMode') == 'true' ? true : false;
+        showLogs('info', '[getMode] Theme in darkTheme is:', darkTheme);
+
+        return darkTheme ? (<LightModeIcon />) : (<DarkModeIcon />);
+    }
 
     return (
         <AppBar position="sticky" >
@@ -78,7 +96,7 @@ export const Navbar = () => {
                         onClick={() => { handleChangeTheme() }}
                     >
                         {
-                            currentTheme === 'darkMode' ? <NightlightIcon /> : <LightModeIcon />
+                            getMode()
                         }
                     </IconButton>
                 </Grid>
