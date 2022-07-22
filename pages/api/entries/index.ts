@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { db } from '../../../database';
 import { Entry, IEntry } from '../../../models';
+import { showLogs } from '../../../utils';
 
 type Data = { message: string; }
     | IEntry[]
@@ -31,6 +32,8 @@ const getEntries = async (res: NextApiResponse<Data>) => {
 }
 
 const createEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+    showLogs('info', 'in createEntry with data:', req.body);
+
     const { title = '', description = '' } = req.body;
 
     const entry = new Entry({
@@ -48,7 +51,7 @@ const createEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     } catch (error) {
         await db.disconnect();
-        console.log(error);
+        showLogs('error', 'error in access db:', error);
         return res.status(500).json({ message: 'Error creating entry' });
     }
 }

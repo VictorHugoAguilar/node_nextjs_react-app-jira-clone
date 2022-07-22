@@ -2,12 +2,15 @@ import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { db } from '../../../database';
 import { Entry, IEntry } from '../../../models';
+import { showLogs } from '../../../utils';
 
 type Data = { message: string; }
     | IEntry[]
     | IEntry;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+    showLogs('info', 'in handler with data:', req.body);
+
     const { id } = req.query;
 
     if (!mongoose.isValidObjectId(id)) {
@@ -17,19 +20,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     switch (req.method) {
         case 'PUT':
             return updateEntry(req, res);
-
         case 'GET':
             return getEntry(req, res);
-
         case 'DELETE':
             return deleteEntry(req, res);
-
         default:
             return res.status(200).json({ message: 'Not valid method' });
     }
 }
 
 const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+    showLogs('warn', 'in updateEntry with data:', req.body);
     const { id } = req.query;
 
     try {
@@ -58,12 +59,13 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(200).json(updateEntry!);
     } catch (error) {
         await db.disconnect();
-        console.log(error);
+        showLogs('error', 'error in access db:', error);
         return res.status(500).json({ message: JSON.stringify(error) });
     }
 }
 
 const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+    showLogs('warn', 'in deleteEntry with data:', req.body);
     const { id } = req.query;
 
     try {
@@ -81,12 +83,13 @@ const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(200).json(deleted!);
     } catch (error) {
         await db.disconnect();
-        console.log(error);
+        showLogs('error', 'error in access db:', error);
         return res.status(500).json({ message: JSON.stringify(error) });
     }
 }
 
 const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+    showLogs('warn', 'in getEntry with data:', req.body);ƒ
     const { id } = req.query;
 
     try {
@@ -101,7 +104,7 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(200).json(entrySearched!);
     } catch (error) {
         await db.disconnect();
-        console.log(error);
+        showLogs('error', 'error in access db:', error);
         return res.status(500).json({ message: JSON.stringify(error) });
     }
 
