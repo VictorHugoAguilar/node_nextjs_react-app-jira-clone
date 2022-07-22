@@ -1,5 +1,5 @@
 import type { AppContext, AppProps } from 'next/app'
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack'
 import { UIContext, UIProvider } from '../context/ui';
 import { EntriesProvider } from '../context/entries';
@@ -32,7 +32,6 @@ function MyApp({ Component, pageProps, theme = 'darkMode' }: Props) {
     setCurrentTheme(selectedTheme);
     showLogs('info', '[MyApp] Theme is:', cookieTheme);
   }, []);
-
 
   return (
     <SnackbarProvider maxSnack={3} >
