@@ -33,8 +33,8 @@ export const NewEntry = () => {
 
         if (inputTitle.length === 0 || inputDescription.length === 0) return;
 
-        showLogs('debug', `Saving new entry inputTitle: ${inputTitle}`);
-        showLogs('debug', `Saving new entry inputDescription: ${inputDescription}`);
+        showLogs('info', `Saving new entry inputTitle: ${inputTitle}`);
+        showLogs('info', `Saving new entry inputDescription: ${inputDescription}`);
 
         // Saved in context
         addNewEntry(inputTitle, inputDescription, true);
