@@ -1,14 +1,15 @@
-import type { AppContext, AppProps } from 'next/app'
-import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
+import type { AppProps } from 'next/app'
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack'
-import { UIContext, UIProvider } from '../context/ui';
+import { UIProvider } from '../context/ui';
 import { EntriesProvider } from '../context/entries';
 import { lightTheme, darkTheme } from '../theme';
 
-import '../styles/globals.css'
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { showLogs } from '../utils';
 import Cookies from 'js-cookie';
+
+import '../styles/globals.css'
 
 interface Props extends AppProps {
   theme: string;
@@ -27,10 +28,19 @@ function MyApp({ Component, pageProps, theme = 'darkMode' }: Props) {
   const [currentTheme, setCurrentTheme] = useState(lightTheme);
 
   useEffect(() => {
-    const cookieTheme = Cookies.get('theme') || 'lightMode';
-    const selectedTheme = cookieTheme === 'lightMode' ? lightTheme : darkTheme;
+    showLogs('info', '[MyApp] Theme is Cookies:', Cookies.get('darkMode'));
+    showLogs('info', '[MyApp] Theme is localStorage:', localStorage.getItem('darkMode'));
+
+    var cookieTheme = Cookies.get('darkMode');
+
+    if (!cookieTheme)
+      cookieTheme = localStorage.getItem('darkMode') || 'true';
+
+    const selectedTheme = cookieTheme == 'true' ? darkTheme : lightTheme;
     setCurrentTheme(selectedTheme);
-    showLogs('info', '[MyApp] Theme is:', cookieTheme);
+
+    showLogs('info', '[MyApp] Theme in selected is darkMode:', cookieTheme);
+
   }, []);
 
   return (
@@ -47,6 +57,7 @@ function MyApp({ Component, pageProps, theme = 'darkMode' }: Props) {
   )
 }
 
+
 // MyApp.getInitialProps = async (appContext: AppContext) => {
 //   const theme = appContext.ctx.req ? (appContext.ctx.req as any).cookies : Cookies.get('theme');
 
@@ -58,6 +69,23 @@ function MyApp({ Component, pageProps, theme = 'darkMode' }: Props) {
 //     theme: validTheme.includes(theme) ? theme : 'darkMode'
 //   }
 
+// }
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+
+//   const { theme = 'light', name = 'No name' } = req.cookies;
+//   const validThemes = ['light','dark','custom'];
+
+
+//   return {
+//       props: {
+//           theme: validThemes.includes( theme ) ? theme : 'dark',
+//           name,
+//       }
+//   }
 // }
 
 export default MyApp
