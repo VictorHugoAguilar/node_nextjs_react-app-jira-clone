@@ -6,7 +6,7 @@ export const showLogs = (type: logType = 'warn', msg: string, obj?: any) => {
     switch (type) {
         case 'info':
             if (process.env.NEXT_PUBLIC_SHOW_LOGS === 'INFO')
-                console.log(`%c${message}`, 'color: #1CF60E;');
+                console.log(`%c${message}`, 'color: #0EA9F6;');
             break;
         case 'warn':
             console.log(`%c${message}`, 'color: #FFF033; ');
