@@ -1,18 +1,19 @@
 import { FC, useReducer } from "react";
+import { showLogs } from "../../utils";
 import { uiReducer, UIContext } from "./";
 
 export interface UIState {
     sideMenuOpen: boolean;
     isAddingEntry: boolean;
     isDragging: boolean;
-    darkMode: boolean;
+    themeMode: string;
 }
 
 const UI_INITIAL_STATE: UIState = {
     sideMenuOpen: false,
     isAddingEntry: false,
     isDragging: false,
-    darkMode: false
+    themeMode: 'darkMode'
 }
 
 interface Props {
@@ -43,8 +44,9 @@ export const UIProvider: FC<Props> = ({ children }) => {
         dispatch({ type: 'UI - End Dragging' });
     }
 
-    const changeDarkMode = () => {
-        dispatch({ type: 'UI - Change Theme' });
+    const setThemeMode = (theme: string) => {
+        showLogs('info', 'Setting theme to', theme);
+        dispatch({ type: 'UI - Change Theme', payload: theme });
     }
 
     return (
@@ -59,7 +61,7 @@ export const UIProvider: FC<Props> = ({ children }) => {
             startDragging,
             endDragging,
 
-            changeDarkMode,
+            setThemeMode,
         }}>
             {children}
         </UIContext.Provider>

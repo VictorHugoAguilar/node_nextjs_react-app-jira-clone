@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import NextLink from "next/link";
 
 import { AppBar, Grid, IconButton, Link, Toolbar, Typography } from "@mui/material"
@@ -7,10 +7,24 @@ import NightlightIcon from '@mui/icons-material/Nightlight';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
 import { UIContext } from "../../context/ui";
+import { showLogs } from "../../utils";
 
 
 export const Navbar = () => {
     const { openSideMenu } = useContext(UIContext);
+
+    const [currentTheme, setCurrentTheme] = useState('darkMode');
+    const { setThemeMode } = useContext(UIContext);
+
+    const handleChangeTheme = () => {
+        if (currentTheme === 'darkMode') {
+            setCurrentTheme('lightMode');
+        } else {
+            setCurrentTheme('darkMode');
+        }
+        setThemeMode(currentTheme);
+        showLogs('info', 'Changing to theme:', currentTheme);
+    }
 
     return (
         <AppBar position="sticky" >
@@ -54,10 +68,13 @@ export const Navbar = () => {
                     <IconButton
                         size="medium"
                         edge='start'
-                        onClick={() => { openSideMenu() }}
+                        onClick={() => { handleChangeTheme() }}
                     >
-                        <LightModeIcon />
-
+                        {
+                            currentTheme === 'darkMode' ?
+                                <NightlightIcon /> :
+                                <LightModeIcon />
+                        }
                     </IconButton>
                 </Grid>
             </Grid>
