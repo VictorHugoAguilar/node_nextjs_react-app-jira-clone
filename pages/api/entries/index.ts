@@ -8,23 +8,25 @@ type Data = { message: string; }
     | IEntry;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+    showLogs('info', 'in handler with data:', req.body);
 
     switch (req.method) {
-        case 'GET':
+        case 'GET': {
             return getEntries(res);
-
-        case 'POST':
+        }
+        case 'POST': {
             return createEntry(req, res);
-
-        default:
+        }
+        default: {
             break;
-
+        }
             res.status(200).json({ message: 'Hello World!' });
     }
-
 }
 
 const getEntries = async (res: NextApiResponse<Data>) => {
+    showLogs('info', 'in getEntries');
+
     await db.connect();
     const entries = await Entry.find().sort({ createdAt: -1 });
     await db.disconnect();
@@ -48,7 +50,6 @@ const createEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         await db.disconnect();
 
         return res.status(201).json(entry);
-
     } catch (error) {
         await db.disconnect();
         showLogs('error', 'error in access db:', error);

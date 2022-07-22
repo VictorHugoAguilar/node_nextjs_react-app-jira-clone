@@ -89,7 +89,7 @@ const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 }
 
 const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-    showLogs('warn', 'in getEntry with data:', req.body);ƒ
+    showLogs('warn', 'in getEntry with data:', req.body);
     const { id } = req.query;
 
     try {
