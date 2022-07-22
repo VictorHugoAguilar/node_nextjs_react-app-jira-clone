@@ -18,12 +18,11 @@ interface Props {
 }
 
 export const EntriesProvider: FC<Props> = ({ children }) => {
-
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const addNewEntry = async (title: string, description: string, showSnackbar = false) => {
-        showLogs('info', 'in addNewEntry with data:', { title, description });
+        showLogs('info', '[Entry Providers] in addNewEntry with data:', { title, description });
 
         try {
             const { data } = await entriesApi.post<Entry>('/entries', {
@@ -47,7 +46,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     }
 
     const updateEntry = async ({ _id, title, description, status }: Entry, showSnackbar = false) => {
-        showLogs('info', 'in updateEntry with entry:', { _id, title, description, status });
+        showLogs('info', '[Entry Providers] in updateEntry with entry:', { _id, title, description, status });
 
         try {
             const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
@@ -72,7 +71,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     }
 
     const deleteEntry = async ({ _id }: Entry, showSnackbar = false) => {
-        showLogs('info', 'in deleteEntry with id:', _id);
+        showLogs('info', '[Entry Providers] in deleteEntry with id:', _id);
 
         try {
             const { data } = await entriesApi.delete<Entry>(`/entries/${_id}`);
@@ -93,7 +92,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     }
 
     const refreshEntries = async () => {
-        showLogs('info', 'in refreshEntries');
+        showLogs('info', '[Entry Providers] in refreshEntries');
 
         try {
             const { data } = await entriesApi.get<Entry[]>('/entries');
