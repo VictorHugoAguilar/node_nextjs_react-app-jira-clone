@@ -18,12 +18,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     }
 
     switch (req.method) {
-        case 'PUT':
+        case 'PUT': {
             return updateEntry(req, res);
-        case 'GET':
+        }
+        case 'GET': {
             return getEntry(req, res);
-        case 'DELETE':
+        }
+        case 'DELETE': {
             return deleteEntry(req, res);
+        }
         default:
             return res.status(200).json({ message: 'Not valid method' });
     }
@@ -31,6 +34,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     showLogs('warn', 'in updateEntry with data:', req.body);
+
     const { id } = req.query;
 
     try {
